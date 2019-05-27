@@ -83,36 +83,6 @@ $("div:animated"); // selecciona todos los divs actualmente animados
 >
 > Cuando se utilizan los pseudo-selectores `:visible` y `:hidden`, jQuery comprueba la visibilidad actual del elemento pero no si éste posee asignados los estilos CSS `visibility` o `display` — en otras palabras, verifica si _el alto y ancho físico del elemento_ es mayor a cero. Sin embargo, esta comprobación no funciona con los elementos `<tr>`; en este caso, jQuery comprueba si se está aplicando el estilo `display` y va a considerar al elemento como oculto si posee asignado el valor `none`. Además, los elementos que aún no fueron añadidos al DOM serán tratados como ocultos, incluso si tienen aplicados estilos indicando que deben ser visibles (En la sección Manipulación de este manual, se explica como crear y añadir elementos al DOM).
 
-Como referencia, este es el fragmento de código que utiliza jQuery para determinar cuando un elemento es visible o no. Se incorporaron los comentarios para que quede más claro su entendimiento:
-
-```javascript
-jQuery.expr.filters.hidden = function(elem) {
-  var width = elem.offsetWidth,
-    height = elem.offsetHeight,
-    skip = elem.nodeName.toLowerCase() === "tr";
-
-  // ¿el elemento posee alto 0, ancho 0 y no es un <tr>?
-  return width === 0 && height === 0 && !skip
-    ? // entonces debe estar oculto (hidden)
-      true
-    : // pero si posee ancho y alto
-    // y no es un <tr>
-    width > 0 && height > 0 && !skip
-    ? // entonces debe estar visible
-      false
-    : // si nos encontramos aquí, es porque el elemento posee ancho
-      // y alto, pero además es un <tr>,
-      // entonces se verifica el valor del estilo display
-      // aplicado a través de CSS
-      // para decidir si está oculto o no
-      jQuery.curCSS(elem, "display") === "none";
-};
-
-jQuery.expr.filters.visible = function(elem) {
-  return !jQuery.expr.filters.hidden(elem);
-};
-```
-
 **Elección de Selectores**
 
 La elección de buenos selectores es un punto importante cuando se desea mejorar el rendimiento del código. Una pequeña especificidad — por ejemplo, incluir el tipo de elemento (como `div`) cuando se realiza una selección por el nombre de clase — puede ayudar bastante. Por eso, es recomendable darle algunas "pistas" a jQuery sobre en que lugar del documento puede encontrar lo que desea seleccionar. Por otro lado, demasiada especificidad puede ser perjudicial. Un selector como `#miTabla thead tr th.especial` es un exceso, lo mejor sería utilizar `#miTabla th.especial`.
@@ -324,19 +294,6 @@ $("h1").css({
 }); // establece múltiples propiedades CSS
 ```
 
-_Notar que el estilo del argumento utilizado en la segunda línea del ejemplo — es un objeto que contiene múltiples propiedades. Esta es una forma común de pasar múltiples argumentos a una función, y muchos métodos establecedores de la biblioteca aceptan objetos para fijar varias propiedades de una sola vez._
-
-A partir de la versión 1.6 de la biblioteca, utilizando `$.fn.css` también es posible establecer valores relativos en las propiedades CSS de un elemento determinado:
-
-**Establecer valores CSS relativos**
-
-```javascript
-$("h1").css({
-  fontSize: "+=15px", // suma 15px al tamaño original del elemento
-  paddingTop: "+=20px" // suma 20px al padding superior original del elemento
-});
-```
-
 ### Utilizar Clases para Aplicar Estilos CSS
 
 Para obtener valores de los estilos aplicados a un elemento, el método `$.fn.css` es muy útil, sin embargo, su utilización como método establecedor se debe evitar (ya que, para aplicar estilos a un elemento, se puede hacer directamente desde CSS). En su lugar, lo ideal, es escribir reglas CSS que se apliquen a clases que describan los diferentes estados visuales de los elementos y luego cambiar la clase del elemento para aplicar el estilo que se desea mostrar.
@@ -376,24 +333,6 @@ $("h1").position(); // devuelve un objeto conteniendo
 // "offset" (posición) de su elemento padre
 ```
 
-## Atributos
-
-Los atributos de los elementos HTML que conforman una aplicación pueden contener información útil, por eso es importante poder establecer y obtener esa información.
-
-El método `$.fn.attr` actúa tanto como método establecedor como obtenedor. Además, al igual que el método `$.fn.css`, cuando se lo utiliza como método establecedor, puede aceptar un conjunto de palabra clave-valor o un objeto conteniendo más conjuntos.
-
-**Establecer atributos**
-
-```javascript
-$("a").attr("href", "allMyHrefsAreTheSameNow.html");
-$("a").attr({
-  title: "all titles are the same too",
-  href: "somethingNew.html"
-});
-```
-
-_En el ejemplo, el objeto pasado como argumento está escrito en varias líneas. Como se explicó anteriormente, los espacios en blanco no importan en JavaScript, por lo cual, es libre de utilizarlos para hacer el código más legible. En entornos de producción, se pueden utilizar herramientas de minificación, los cuales quitan los espacios en blanco (entre otras cosas) y comprimen el archivo final._
-
 **Obtener atributos**
 
 ```javascript
@@ -425,8 +364,6 @@ $("#myList").children(); // seleccionar todos los elementos
 $("li.selected").siblings(); // seleccionar todos los items
 // hermanos del elemento <li>
 ```
-
-También es posible interactuar con la selección utilizando el método `$.fn.each`. Dicho método interactúa con todos los elementos obtenidos en la selección y ejecuta una función por cada uno. La función recibe como argumento el índice del elemento actual y al mismo elemento. De forma predeterminada, dentro de la función, se puede hacer referencia al elemento DOM a través de la declaración `this`.
 
 **Interactuar en una selección**
 
@@ -636,37 +573,23 @@ $("#myDiv a:first").attr("href", function(idx, href) {
 
 ### Selecciones
 
-Abra el archivo `/ejercicios/index.html` en el navegador. Realice el ejercicio utilizando el archivo `/ejercicios/js/sandbox.js` o trabaje directamente con Firebug para cumplir los siguientes puntos:
+Dado un archivo html:
 
 1.  Seleccionar todos los elementos `div` que poseen la clase "module".
 
-2.  Especificar tres selecciones que puedan seleccionar el tercer ítem de la lista desordenada #myList. ¿Cuál es el mejor para utilizar? ¿Porqué?
+2.  Averiguar cuantos elementos en la página están ocultos (ayuda: `.length`).
 
-3.  Seleccionar el elemento `label` del elemento `input` utilizando un selector de atributo.
-
-4.  Averiguar cuantos elementos en la página están ocultos (ayuda: `.length`).
-
-5.  Averiguar cuantas imágenes en la página poseen el atributo `alt`.
-
-6.  Seleccionar todas las filas impares del cuerpo de la tabla.
+3.  Seleccionar todas las filas impares del cuerpo de la tabla.
 
 ### Recorrer el DOM
 
-Abra el archivo `/ejercicios/index.html` en el navegador. Realice el ejercicio utilizando el archivo `/ejercicios/js/sandbox.js` o trabaje directamente con Firebug para cumplir los siguientes puntos:
+1.  Seleccionar el elemento `input`, luego dirigirse hacia el formulario y añadirle una clase al mismo.
 
-1.  Seleccionar todas las imágenes en la página; registrar en la consola el atributo `alt` de cada imagen.
+2.  Seleccionar el ítem que posee la clase "current" dentro de la lista #myList y remover dicha clase en el elemento; luego añadir la clase "current" al siguiente ítem de la lista.
 
-2.  Seleccionar el elemento `input`, luego dirigirse hacia el formulario y añadirle una clase al mismo.
-
-3.  Seleccionar el ítem que posee la clase "current" dentro de la lista #myList y remover dicha clase en el elemento; luego añadir la clase "current" al siguiente ítem de la lista.
-
-4.  Seleccionar el elemento `select` dentro de #specials; luego dirigirse hacia el botón `submit`.
-
-5.  Seleccionar el primer ítem de la lista en el elemento #slideshow; añadirle la clase "current" al mismo y luego añadir la clase "disabled" a los elementos hermanos.
+3.  Seleccionar el primer ítem de la lista en el elemento #slideshow; añadirle la clase "current" al mismo y luego añadir la clase "disabled" a los elementos hermanos. \*\*
 
 ### Manipulación
-
-Abra el archivo `/ejercicios/index.html` en el navegador. Realice el ejercicio utilizando el archivo `/ejercicios/js/sandbox.js` o trabaje directamente con Firebug para cumplir los siguientes puntos:
 
 1.  Añadir 5 nuevos ítems al final de la lista desordenada #myList. Ayuda:
 
@@ -678,6 +601,6 @@ for (var i = 0; i<5; i++) { ... }
 
 3.  Añadir otro elemento `h2` y otro párrafo al último `div.module`.
 
-4.  Añadir otra opción al elemento `select`; darle a la opción añadida el valor _"Wednesday"_.
+4.  Añadir otra opción al elemento `select`; darle a la opción añadida el valor _"Wednesday"_. \*\*
 
-5.  Añadir un nuevo `div.module` a la página después del último; luego añadir una copia de una de las imágenes existentes dentro del nuevo `div`.
+5.  Añadir un nuevo `div.module` a la página después del último; luego añadir una copia de una de las imágenes existentes dentro del nuevo `div`. \*\*
