@@ -604,3 +604,46 @@ for (var i = 0; i<5; i++) { ... }
 4.  Añadir otra opción al elemento `select`; darle a la opción añadida el valor _"Wednesday"_. \*\*
 
 5.  Añadir un nuevo `div.module` a la página después del último; luego añadir una copia de una de las imágenes existentes dentro del nuevo `div`. \*\*
+
+# Eventos
+
+## Introducción
+
+jQuery provee métodos para asociar controladores de eventos (en inglés _event handlers_) a selectores. Cuando un evento ocurre, la función provista es ejecutada. Dentro de la función, la palabra clave `this` hace referencia al elemento en que el evento ocurre.
+
+Para más detalles sobre los eventos en jQuery, puede consultar [http://api.jquery.com/category/events/](http://api.jquery.com/category/events/).
+
+La función del controlador de eventos puede recibir un objeto. Este objeto puede ser utilizado para determinar la naturaleza del evento o, por ejemplo, prevenir el comportamiento predeterminado de éste. Para más detalles sobre el objeto del evento, visite [http://api.jquery.com/category/events/event-object/](http://api.jquery.com/category/events/event-object/).
+
+## Vincular Eventos a Elementos
+
+jQuery ofrece métodos para la mayoría de los eventos — entre ellos `$.fn.click`, `$.fn.focus`, `$.fn.blur`, `$.fn.change`, etc. Estos últimos son formas reducidas del método `$.fn.on` de jQuery (`$.fn.bind` en versiones anteriores a jQuery 1.7). El método `$.fn.on` es útil para vincular (en inglés _binding_) la misma función de controlador a múltiples eventos, para cuando se desea proveer información al controlador de evento, cuando se está trabajando con eventos personalizados o cuando se desea pasar un objeto a múltiples eventos y controladores.
+
+**Vincular un evento utilizando un método reducido**
+
+```javascript
+$("p").click(function() {
+  console.log("click");
+});
+```
+
+Ejemplo:
+
+Agregamos un elemento y le ponemos un atributo id.
+
+```html
+<button id="c1">Ocultar bloque</button>
+```
+
+También se puede emplear en enlaces, bloques (div) o en otros elementos HTML, siempre que se les agregue un identificador (id).
+Es posible también usar otros eventos como dblclick, hover (posicionar el cursor del mouse encima) y otros.
+
+La sintaxis básica es la siguiente.
+
+```html
+<script>
+  $("selector inicio").evento(function() {});
+</script>
+```
+
+https://codepen.io/roxigonzalez/pen/dLxNbE?editors=1010
