@@ -58,6 +58,78 @@ Las Media queries consisten de un media type y una o más expresiones, implicand
 </style>
 ```
 
+Cuando una media query es verdadera, la hoja de estilo correspondiente o reglas de estilos son aplicadas, siguiendo las reglas normales de cascada.
+
+| Nota: Repasar los operadores lógicos AND, OR, NOT ;)
+
+## Puntos de quiebre (breakpoints)
+
+Los puntos de quiebre (o breakpoints) son los anchos (en pixeles) en los que ocurren cambios en nuestra página para que se adapte a diferentes pantallas.
+
+En vez de utilizar los valores que se nos ocurran para los anchos de diferentes pantallas, se han definido ciertos valores para determinar el tipo de pantalla que se está usando:
+
+- Hasta 575px son teléfonos móviles en modo vertical.
+- De 576px a 767px son teléfonos móviles en modo horizontal.
+- De 768px a 991px son tabletas.
+- De 992px a 1199px son pantallas de escritorio normales.
+- 1200px o más son pantallas grandes como televisores.
+
+Sin embargo, cuando hablamos de puntos de quiebre nos referimos a un ancho específico, por ejemplo 768px, que es el momento en el que cambia la pantalla de teléfono móvil a tableta.
+
+Estos valores son sólo una referencia. El ancho de la mayoría de pantallas de escritorio hoy en día, por ejemplo, es de más de 1200px.
+
+A continuación veremos cómo utilizar estos puntos de quiebre para crear aplicaciones que se adaptan a diferentes pantallas.
+
+## Mobile first
+
+Se le llama a la técnica de comenzar el diseño o adaptar los elementos en de la página web en móviles. Es decir, primero se definen las reglas dirigidas a teléfonos móviles y con media queries ajustamos el contenido para pantallas más anchas.
+
+Veamos un ejemplo. Imagina que queremos ir incrementando el tamaño de la letra de acuerdo al ancho de la pantalla:
+
+- 14px en teléfonos móviles.
+- 15px para tabletas.
+- 16px para pantallas de escritorio normales.
+- 17px para pantallas grandes.
+
+Lo primero que vamos a definir es el estilo para telefonos móviles y después utilizamos media queries para los demás:
+
+```css
+/* mobile first */
+body {
+  font-size: 14px;
+}
+
+/* tabletas */
+@media (min-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+/* escritorio normales */
+@media (min-width: 992px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* pantallas grandes */
+@media (min-width: 1200px) {
+  body {
+    font-size: 17px;
+  }
+}
+```
+
+## En conclusión
+
+Los media queries son el componente fundamental de responsive design, pero para que una página sea completamente adaptable debes verificar también que las imágenes, videos, tablas, etc. se vean bien en todos los dispositivos.
+
+Por último, si quieres ver ejemplos de responsive design te recomiendo estos dos sitios:
+
+https://mediaqueri.es/
+https://responsivedesign.is/examples/
+
 ## Herramientas para responsive design
 
 https://material.io/tools/resizer/
