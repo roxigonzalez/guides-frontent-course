@@ -127,12 +127,16 @@ Los media queries son el componente fundamental de responsive design, pero para 
 
 Por último, si quieres ver ejemplos de responsive design te recomiendo estos dos sitios:
 
-https://mediaqueri.es/
-https://responsivedesign.is/examples/
+[MediaQueries](https://mediaqueri.es/)
+
+[ResponsiveDesign](https://responsivedesign.is/examples/)
 
 ## Herramientas para responsive design
 
 https://material.io/tools/resizer/
+
 http://resizemybrowser.com/
+
 https://designmodo.com/responsive-test/
+
 https://www.thinkwithgoogle.com/intl/es-419/feature/testmysite
