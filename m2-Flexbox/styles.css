@@ -1,0 +1,13 @@
+.flex-container {
+  display: flex;
+  width: 700px;
+  background-color: #ddf58c;
+  justify-content: space-around
+}
+
+.flex-item {
+  background-color: #67c3e6;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
